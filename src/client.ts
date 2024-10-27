@@ -15,12 +15,14 @@ export class Client {
         this._apiKey = apiKey;
     }
 
-    prompt = (promptId: string): Promise<any> => {
-        return request.get(`/prompts/${promptId}/live`, {
+    prompt = async (promptId: string): Promise<any> => {
+        const result = await request.get(`/v1/prompts/${promptId}/live`, {
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${this._apiKey}`,
+                'x-ottic-api-key': this._apiKey,
             },
         });
+
+        return result.data;
     };
 }
